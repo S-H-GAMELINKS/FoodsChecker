@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= form.collection_select :category, Foodtype.all, :id, :category_name, include_blank: true %>
   </div>
 
   <div class="field">
