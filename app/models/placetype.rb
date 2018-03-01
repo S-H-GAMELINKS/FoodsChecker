@@ -1,0 +1,2 @@
+class Placetype < ApplicationRecord
+end
