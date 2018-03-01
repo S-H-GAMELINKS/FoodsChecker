@@ -22,13 +22,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :type %>
-    <%= form.collection_select :category, Foodtype.all, :id, :name, include_blank: true %>
+    <%= form.label :food %>
+    <%= form.collection_select(:food, Foodtype.all, :name, :name, include_blank: true) %>
   </div>
 
   <div class="field">
     <%= form.label :place %>
-    <%= form.collection_select :category, Placetype.all, :id, :name, include_blank: true %>
+    <%= form.collection_select(:place, Placetype.all, :name, :name, include_blank: true) %>
   </div>
 
   <div class="field">
