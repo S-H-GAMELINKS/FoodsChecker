@@ -1,5 +1,47 @@
 <p id="notice"><%= notice %></p>
 
+<%= search_form_for @search do |f| %>
+  <div class="form-group">
+    <%= f.label :name_cont, "Name" %>
+    <%= f.text_field :name_cont, class: "form-control" %>
+    <%= f.label :name_cont, "Foodtype" %>
+    <%= f.collection_select(:food_eq, Foodtype.all, :name, :name, include_blank: true, class: "form-control") %>
+    <%= f.label :name_cont, "Placetype" %>
+    <%= f.collection_select(:place_eq, Placetype.all, :name, :name, include_blank: true, class: "form-control") %>
+  </div>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+<table>
+<thead>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Type</th>
+    <th>Place</th>
+    <th>Picture</th>
+    <th colspan="3"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <% @match_foods.each do |food| %>
+    <tr>
+      <td><%= food.name %></td>
+      <td><%= food.date %></td>
+      <td><%= food.food %></td>
+      <td><%= food.place %></td>
+      <td><%= food.picture %></td>
+      <td><%= link_to 'Show', food %></td>
+      <td><%= link_to 'Edit', edit_food_path(food) %></td>
+      <td><%= link_to 'Destroy', food, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+<%= paginate @match_foods %>
+
 <h1>Foods</h1>
 
 <table>

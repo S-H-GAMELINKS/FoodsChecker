@@ -7,6 +7,8 @@ class FoodsController < ApplicationController
   # GET /foods.json
   def index
     @foods = Food.page(params[:page]).per(PER)
+    @search = Food.search(params[:q])
+    @match_foods = @search.result.page(params[:page]).per(PER)
   end
 
   # GET /foods/1
