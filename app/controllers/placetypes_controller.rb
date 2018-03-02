@@ -1,10 +1,12 @@
 class PlacetypesController < ApplicationController
   before_action :set_placetype, only: [:show, :edit, :update, :destroy]
 
+  PER = 10
+
   # GET /placetypes
   # GET /placetypes.json
   def index
-    @placetypes = Placetype.all
+    @placetypes = Placetype.page(params[:page]).per(PER)
   end
 
   # GET /placetypes/1
