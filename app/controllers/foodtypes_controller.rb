@@ -1,10 +1,12 @@
 class FoodtypesController < ApplicationController
   before_action :set_foodtype, only: [:show, :edit, :update, :destroy]
 
+  PER = 10
+
   # GET /foodtypes
   # GET /foodtypes.json
   def index
-    @foodtypes = Foodtype.all
+    @foodtypes = Foodtype.page(params[:page]).per(PER)
   end
 
   # GET /foodtypes/1
