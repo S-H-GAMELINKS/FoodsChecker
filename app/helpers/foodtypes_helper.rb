@@ -1,0 +1,2 @@
+module FoodtypesHelper
+end
