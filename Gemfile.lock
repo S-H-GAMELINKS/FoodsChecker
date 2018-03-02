@@ -256,6 +256,9 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     json (2.1.0)
+    kaminari (0.17.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     loofah (2.2.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -389,6 +392,7 @@ DEPENDENCIES
   duktape
   fog
   jbuilder (~> 2.5)
+  kaminari (~> 0.17.0)
   pg (~> 0.20)
   puma (~> 3.11)
   rails (~> 5.2.0.rc1)
