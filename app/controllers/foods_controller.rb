@@ -1,10 +1,12 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
 
+  PER = 10
+
   # GET /foods
   # GET /foods.json
   def index
-    @foods = Food.all
+    @foods = Food.page(params[:page]).per(PER)
   end
 
   # GET /foods/1
