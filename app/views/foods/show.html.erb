@@ -22,7 +22,7 @@
 
 <p>
   <strong>Picture:</strong>
-  <%= image_tag(@food.picture_url, :size => "480x329") if @food.picture.present? %>
+  <%= image_tag(@food.picture_url, :size => "100x200") if @food.picture.present? %>
 </p>
 
 <%= link_to 'Edit', edit_food_path(@food) %> |
