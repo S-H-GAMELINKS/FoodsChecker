@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Counts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @counts.each do |count| %>
+      <tr>
+        <td><%= count.count %></td>
+        <td><%= link_to 'Show', count %></td>
+        <td><%= link_to 'Edit', edit_count_path(count) %></td>
+        <td><%= link_to 'Destroy', count, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Count', new_count_path %>

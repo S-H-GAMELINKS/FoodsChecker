@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :counts
   resources :foods
   resources :foodtypes
   resources :placetypes
