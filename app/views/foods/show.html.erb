@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <strong>Place:</strong>
+  <%= @food.count %><%= @food.counttype %>
+</p>
+
+<p>
   <strong>Picture:</strong>
   <%= image_tag(@food.picture_url, :size => "100x200") if @food.picture.present? %>
 </p>
