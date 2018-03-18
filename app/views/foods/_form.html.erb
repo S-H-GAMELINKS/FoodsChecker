@@ -31,9 +31,9 @@
     <%= form.collection_select(:place, Placetype.all, :name, :name, include_blank: true) %>
   </div>
 
-    <div class="field">
-    <%= form.label :place %>
-    <%= form.collection_select(:place, Count.all, :count, :count, include_blank: true) %><%= form.collection_select(:place, Counttype.all, :counttype, :counttype, include_blank: true) %>
+  <div class="field">
+    <%= form.label :count %>
+    <%= form.collection_select(:count, Count.all, :count, :count, include_blank: true) %><%= form.collection_select(:counttype, Counttype.all, :counttype, :counttype, include_blank: true) %>
   </div>
 
   <div class="field">

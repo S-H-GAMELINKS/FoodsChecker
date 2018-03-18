@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_18_141942) do
+ActiveRecord::Schema.define(version: 2018_03_18_144631) do
 
   create_table "counts", force: :cascade do |t|
     t.integer "count"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2018_03_18_141942) do
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "count"
+    t.string "counttype"
   end
 
   create_table "foodtypes", force: :cascade do |t|
