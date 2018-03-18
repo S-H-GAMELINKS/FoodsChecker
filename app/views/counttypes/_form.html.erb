@@ -1,0 +1,22 @@
+<%= form_with(model: counttype, local: true) do |form| %>
+  <% if counttype.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(counttype.errors.count, "error") %> prohibited this counttype from being saved:</h2>
+
+      <ul>
+      <% counttype.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :counttype %>
+    <%= form.text_field :counttype %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

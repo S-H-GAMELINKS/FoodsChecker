@@ -1,0 +1,2 @@
+class Counttype < ApplicationRecord
+end
