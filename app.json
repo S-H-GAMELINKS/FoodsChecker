@@ -3,7 +3,6 @@
   "description": "食品管理アプリです。",
   "repository": "https://github.com/GAMELINKS/FoodsChecker.for.Mastodon",
   "env": {
-    "BASIC_AUTH_USER": "",
     "AWS_ACCESS_KEY": "",
     "AWS_SECRET_KEY": "",
     "AWS_REGION_NAME": "",
