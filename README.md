@@ -42,6 +42,12 @@ Herokuへデプロイして運用しています。
 
 また、AWS S3 をストレージとして利用しています。
 
+# デプロイ
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+上記のボタンからHerokuへとデプロイできます。
+
 # 使用しているテンプレートなど
 
 [Umi](https://github.com/NKMR6194/Umi)というBootstrapで流麗な日本語を表示できるテンプレートを使用させていただいています。
