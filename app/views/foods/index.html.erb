@@ -9,6 +9,7 @@
     <%= f.label :name_cont, "Placetype" %>
     <%= f.collection_select(:place_eq, Placetype.all, :name, :name, include_blank: true, class: "form-control") %>
     <p><%= sort_link(@search, :date, "Date") %></p>
+    <p><%= sort_link(@search, :count, "Count") %></p>
   </div>
   <div class="actions"><%= f.submit "Search" %></div>
 <% end %>
