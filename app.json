@@ -10,6 +10,8 @@
     "AWS_STORAGE_PATH": "",
     "DEVISE_SECRET_KEY": "",
     "ACCESS_KEY": "",
-    "SECRET_KEY": ""
+    "SECRET_KEY": "",
+    "LINE_ID": "",
+    "WEB_APP_URL": ""
   }
 }
