@@ -34,7 +34,7 @@ require 'uri'
 
     @foods.each do |food|
         if food.date == Date.today then
-            message = ("賞味期限が近い食品:#{food.name}がありますよ！ #{food.picture} https://foods-checker.herokuapp.com/ #FoodsChecker ")
+            message = ("賞味期限が近い食品:#{food.name}がありますよ！ #{food.picture} #{ENV["WEB_APP_URL"]}")
             line.send(message)
         end
     end
