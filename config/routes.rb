@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :counttypes
   resources :counts
   resources :foods
