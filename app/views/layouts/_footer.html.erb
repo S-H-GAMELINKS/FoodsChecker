@@ -10,6 +10,7 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
+        <% if user_signed_in? %>
           <li><%= link_to "Top", root_path %></li>
           <li><%= link_to '食品登録', new_food_path %></li>
           <li><%= link_to "食品群類", foodtypes_path %></li>
@@ -17,6 +18,10 @@
           <li><%= link_to "数量定義", counts_path %></li>
           <li><%= link_to "数量分類", counttypes_path %></li>
           <li><%= link_to "ソースコード", "https://github.com/S-H-GAMELINKS/FoodsChecker" %></li>
+          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to "ログイン", new_user_session_path %></li>
+        <% end %>
       </div>
     </div>
   </nav>
