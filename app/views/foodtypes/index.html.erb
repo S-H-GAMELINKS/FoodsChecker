@@ -30,7 +30,7 @@
 
 <br>
 
-<%= form_tag({controller: "foods", action: "import", method: "post"}, {multipart: true}) do %>
+<%= form_tag({controller: "foodtypes", action: "import", method: "post"}, {multipart: true}) do %>
   <%= file_field_tag :file %>
   <%= submit_tag "食品群類を一括インポート" %>
 <% end %>
