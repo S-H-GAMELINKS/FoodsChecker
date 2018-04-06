@@ -13,6 +13,6 @@ class Foodtype < ApplicationRecord
     end
         
     def self.updatable_attributes
-        ["foodtype"]
+        ["name"]
     end
 end
