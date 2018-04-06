@@ -63,6 +63,11 @@ class PlacetypesController < ApplicationController
     end
   end
 
+  def import
+    Placetype.import(params[:file])
+    redirect_to root_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_placetype
