@@ -25,3 +25,12 @@
 <br>
 
 <%= link_to 'New Counttype', new_counttype_path %>
+
+
+<br>
+
+<%= form_tag({controller: "foods", action: "import", method: "post"}, {multipart: true}) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "数量分類を一括インポート" %>
+<% end %>
+
