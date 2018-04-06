@@ -49,6 +49,14 @@
 <br>
 
 <%= link_to 'New Food', new_food_path %>
+
+<br><br>
+
+<%= form_tag({controller: "foods", action: "import", method: "post"}, {multipart: true}) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "食品を一括インポート" %>
+<% end %>
+
 <% else %>
   <%= link_to "ログイン", new_user_session_path %>
 <% end %>

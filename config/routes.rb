@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :counttypes
   resources :counts
-  resources :foods
+  resources :foods do
+    collection {post :import}
+  end
   resources :foodtypes
   resources :placetypes
   root 'foods#index'
