@@ -5,14 +5,14 @@ class Counttype < ApplicationRecord
 
         CSV.foreach(file.path, headers: true) do |row|
     
-          food = new
-          food.attributes = row.to_hash.slice(*updatable_attributes)
+          counttype = new
+          counttype.attributes = row.to_hash.slice(*updatable_attributes)
     
-          food.save!
+          counttype.save!
         end
     end
     
     def self.updatable_attributes
-        ["name","date","food","place","count","counttype"]
+        ["counttype"]
     end
 end
