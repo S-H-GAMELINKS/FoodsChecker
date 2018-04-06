@@ -27,3 +27,10 @@
 <br>
 
 <%= link_to 'New Foodtype', new_foodtype_path %>
+
+<br>
+
+<%= form_tag({controller: "foods", action: "import", method: "post"}, {multipart: true}) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "食品群類を一括インポート" %>
+<% end %>

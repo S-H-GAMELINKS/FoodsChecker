@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   resources :foods do
     collection {post :import}
   end
-  resources :foodtypes
+  resources :foodtypes　do
+    collection {post :import}
+  end
   resources :placetypes
   root 'foods#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
