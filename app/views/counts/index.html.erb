@@ -25,3 +25,10 @@
 <br>
 
 <%= link_to 'New Count', new_count_path %>
+
+<br>
+
+<%= form_tag({controller: "counts", action: "import", method: "post"}, {multipart: true}) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "数量を一括インポート" %>
+<% end %>

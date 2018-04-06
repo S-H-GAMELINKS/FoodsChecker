@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :counttypes
-  resources :counts
+  resources :counts do
+    collection {post :import}
+  end
   resources :foods do
     collection {post :import}
   end
