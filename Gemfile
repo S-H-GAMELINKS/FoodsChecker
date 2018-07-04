@@ -45,7 +45,7 @@ gem 'devise'
 gem "serviceworker-rails"
 
 # For Barcode Scan
-gem 'zbar', :require => false
+gem 'zbar'
 gem 'rmagick'
 
 # Reduces boot times through caching; required in config/boot.rb
