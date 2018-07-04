@@ -1,6 +1,8 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
 
+  require 'zbar'
+
   PER = 10
 
   # GET /foods
@@ -83,9 +85,6 @@ class FoodsController < ApplicationController
     end
 
     def get_food_barcode(filename)
-
-      require 'rmagick'
-      require 'zbar'
 
       file = filename
       image = Magick::Image.read(file)
