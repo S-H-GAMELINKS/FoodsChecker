@@ -29,6 +29,8 @@ class FoodsController < ApplicationController
   def create
     @food = Food.new(food_params)
 
+    puts get_food_barcode(@food.picture)
+
     respond_to do |format|
       if @food.save
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
@@ -78,5 +80,18 @@ class FoodsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_params
       params.require(:food).permit(:name, :date, :food, :place, :picture, :count, :counttype)
+    end
+
+    def get_food_barcode(filename)
+      file = filename
+      image = Magick::Image.read(file)
+  
+      puts image[0].write(file + ".png")
+  
+      img = Magick::Image.read(file + ".png").first
+      pgm = img.to_blob { |attrs| attrs.format = 'PGM' }
+      zbar_image = ZBar::Image.from_pgm(pgm)
+      symbols = zbar_image.process
+      puts symbols.inspect  
     end
 end
