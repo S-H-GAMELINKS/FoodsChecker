@@ -85,7 +85,7 @@ class FoodsController < ApplicationController
     def get_food_barcode(filename)
 
       file = filename
-      image = Magick::Image.read(file)
+      image = Magick::ImageList.new(file)
   
       puts image[0].write(file + ".png")
   
