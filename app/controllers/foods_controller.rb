@@ -1,8 +1,6 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
-
-  require 'zbar'
-
+  
   PER = 10
 
   # GET /foods
