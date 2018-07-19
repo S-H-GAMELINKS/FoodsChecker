@@ -114,5 +114,22 @@ class FoodsController < ApplicationController
       image.process.each do |result|
         puts "Code: #{result.data} - Type: #{result.symbology} - Quality: #{result.quality}"
       end
+
+      get_barcode_info(result.data)
+    end
+
+    def get_food_info(barcode)
+      Amazon::Ecs.configure do |options|
+        options[:AWS_access_key_id] = ENV['ECS_ACCESS_KEY']
+        options[:AWS_secret_key] = ENV['ECS_SECRET_KEY']
+        options[:associate_tag] = ENV['ECS_TAG']
+        options[:search_index]      = 'All'                      # 商品種別
+        options[:response_group]    = 'Medium'                     # レスポンスに含まれる情報量(ふつう
+        options[:country]           = 'jp'                         # 国
+      end
+    
+      res = Amazon::Ecs.item_search(barcode.to_s, :search_index => 'All')
+      puts res.get_element('Title').to_s.gsub!(/<Title>|<\/Title>/, "")
+      puts res.total_results
     end
 end
