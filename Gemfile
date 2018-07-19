@@ -48,6 +48,7 @@ gem "serviceworker-rails"
 gem 'zbar', :require => false
 gem 'rmagick', '~> 2.16.0'
 gem 'aws-sdk'
+gem 'amazon-ecs'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
