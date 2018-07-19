@@ -116,7 +116,7 @@ class FoodsController < ApplicationController
         puts "Code: #{result.data} - Type: #{result.symbology} - Quality: #{result.quality}"
       end
 
-      get_barcode_info(result.data)
+      get_barcode_info(image.process.data)
     end
 
     def get_food_info(barcode)
