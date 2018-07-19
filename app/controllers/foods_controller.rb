@@ -112,11 +112,14 @@ class FoodsController < ApplicationController
       # load the image from a string
       image = ZBar::Image.from_pgm(input.to_blob)
 
+      barcode = nil
+
       image.process.each do |result|
         puts "Code: #{result.data} - Type: #{result.symbology} - Quality: #{result.quality}"
+        barcode = result.data
       end
 
-      get_barcode_info(image.process.data)
+      get_barcode_info(barcode.to_s)
     end
 
     def get_food_info(barcode)
