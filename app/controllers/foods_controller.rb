@@ -37,7 +37,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.save
 
-        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s), @s3)
 
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
@@ -54,7 +54,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.update(food_params)
 
-        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s), @s3)
 
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
@@ -98,9 +98,9 @@ class FoodsController < ApplicationController
             )
     end
 
-    def get_barcode_info(path)
+    def get_barcode_info(path, s3)
       File.open("./public/temp.jpg","wb") do |file|
-        file.write @s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path.to_s).body.read
+        file.write s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path).body.read
       end
 
       # load the image via rmagick
