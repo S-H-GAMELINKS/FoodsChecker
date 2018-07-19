@@ -1,5 +1,9 @@
+require 'zbar'
+require 'RMagick'
+
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
+  before_action :set_s3_client, only: [:create, :update]
   
   PER = 10
 
@@ -29,10 +33,11 @@ class FoodsController < ApplicationController
   def create
     @food = Food.new(food_params)
 
-    puts get_food_barcode(@food.picture)
-
     respond_to do |format|
       if @food.save
+
+        get_barcode_info(@food.picture.path.to_s)
+
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
       else
@@ -47,6 +52,9 @@ class FoodsController < ApplicationController
   def update
     respond_to do |format|
       if @food.update(food_params)
+
+        get_barcode_info(@food.picture.path.to_s)
+
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
       else
@@ -82,17 +90,29 @@ class FoodsController < ApplicationController
       params.require(:food).permit(:name, :date, :food, :place, :picture, :count, :counttype)
     end
 
-    def get_food_barcode(filename)
+    def set_s3_client
+      @s3 = Aws::S3::Client.new(:region => ENV['AWS_REGION_NAME'],
+                                :access_key_id => ENV['AWS_ACCESS_KEY'],
+                                :secret_access_key => ENV['AWS_SECRET_KEY'],
+            )
+    end
 
-      file = "https:" + filename.to_s
-      image = Magick::ImageList.new(file)
-  
-      puts image[0].write(file + ".png")
-  
-      img = Magick::Image.read(file + ".png").first
-      pgm = img.to_blob { |attrs| attrs.format = 'PGM' }
-      zbar_image = ZBar::Image.from_pgm(pgm)
-      symbols = zbar_image.process
-      puts symbols.inspect  
+    def get_barcode_info(path)
+      File.open("./public/temp.jpg","wb") do |file|
+        file.write @s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path.to_s).body.read
+      end
+
+      # load the image via rmagick
+      input = Magick::Image.read('./public/temp.jpg').first
+
+      # convert to PGM
+      input.format = 'PGM'
+
+      # load the image from a string
+      image = ZBar::Image.from_pgm(input.to_blob)
+
+      image.process.each do |result|
+        puts "Code: #{result.data} - Type: #{result.symbology} - Quality: #{result.quality}"
+      end
     end
 end
