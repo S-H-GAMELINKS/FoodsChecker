@@ -4,7 +4,6 @@ require 'amazon/ecs'
 
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
-  before_action :set_s3_client, only: [:create, :update]
   
   PER = 10
 
@@ -91,16 +90,15 @@ class FoodsController < ApplicationController
       params.require(:food).permit(:name, :date, :food, :place, :picture, :count, :counttype)
     end
 
-    def set_s3_client
+    def get_barcode_info(path)
+
       @s3 = Aws::S3::Client.new(:region => ENV['AWS_REGION_NAME'],
                                 :access_key_id => ENV['AWS_ACCESS_KEY'],
                                 :secret_access_key => ENV['AWS_SECRET_KEY'],
-            )
-    end
+      )
 
-    def get_barcode_info(path, s3)
       File.open("./public/temp.jpg","wb") do |file|
-        file.write s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path).body.read
+        file.write @s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path).body.read
       end
 
       # load the image via rmagick
