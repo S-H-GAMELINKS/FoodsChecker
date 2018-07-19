@@ -36,7 +36,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.save
 
-        get_barcode_info(@food.picture.path.to_s)
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
@@ -53,7 +53,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.update(food_params)
 
-        get_barcode_info(@food.picture.path.to_s)
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
@@ -130,6 +130,5 @@ class FoodsController < ApplicationController
     
       res = Amazon::Ecs.item_search(barcode.to_s, :search_index => 'All')
       puts res.get_element('Title').to_s.gsub!(/<Title>|<\/Title>/, "")
-      puts res.total_results
     end
 end
