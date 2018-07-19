@@ -1,5 +1,6 @@
 require 'zbar'
 require 'RMagick'
+require 'amazon/ecs'
 
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
