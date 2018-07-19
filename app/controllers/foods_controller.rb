@@ -36,7 +36,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.save
 
-        @food.update(:name => get_barcode_info(@food.picture.path.to_s, @s3))
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
@@ -53,7 +53,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.update(food_params)
 
-        @food.update(:name => get_barcode_info(@food.picture.path.to_s, @s3))
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
