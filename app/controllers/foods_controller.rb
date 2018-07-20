@@ -36,7 +36,9 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.save
 
-        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
+        puts name = get_barcode_info(@food.picture.path.to_s)
+
+        @food.update!(:name => name)
 
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
@@ -45,7 +47,7 @@ class FoodsController < ApplicationController
         format.json { render json: @food.errors, status: :unprocessable_entity }
       end
     end
-  end
+  end 
 
   # PATCH/PUT /foods/1
   # PATCH/PUT /foods/1.json
@@ -117,7 +119,9 @@ class FoodsController < ApplicationController
         barcode = result.data
       end
 
-      get_food_info(barcode.to_s)
+      puts barcode
+
+      return get_food_info(barcode.to_s)
     end
 
     def get_food_info(barcode)
@@ -130,7 +134,9 @@ class FoodsController < ApplicationController
         options[:country]           = 'jp'                         # 国
       end
     
-      res = Amazon::Ecs.item_search(barcode.to_s, :search_index => 'All')
-      puts res.get_element('Title').to_s.gsub!(/<Title>|<\/Title>/, "")
+      res = Amazon::Ecs.item_search(barcode, :search_index => 'All')
+      puts res.doc.to_s
+      puts name = res.get_element('Title').to_s.gsub!(/<Title>|<\/Title>/, "")
+      return name
     end
 end
