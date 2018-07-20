@@ -117,7 +117,7 @@ class FoodsController < ApplicationController
         barcode = result.data
       end
 
-      get_barcode_info(barcode.to_s)
+      get_food_info(barcode.to_s)
     end
 
     def get_food_info(barcode)
