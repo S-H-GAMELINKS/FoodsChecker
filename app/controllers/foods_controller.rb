@@ -1,9 +1,9 @@
 require 'zbar'
 require 'RMagick'
+require 'amazon/ecs'
 
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
-  before_action :set_s3_client, only: [:create, :update]
   
   PER = 10
 
@@ -36,7 +36,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.save
 
-        get_barcode_info(@food.picture.path.to_s)
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully created.' }
         format.json { render :show, status: :created, location: @food }
@@ -53,7 +53,7 @@ class FoodsController < ApplicationController
     respond_to do |format|
       if @food.update(food_params)
 
-        get_barcode_info(@food.picture.path.to_s)
+        @food.update(:name => get_barcode_info(@food.picture.path.to_s))
 
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
@@ -90,16 +90,15 @@ class FoodsController < ApplicationController
       params.require(:food).permit(:name, :date, :food, :place, :picture, :count, :counttype)
     end
 
-    def set_s3_client
+    def get_barcode_info(path)
+
       @s3 = Aws::S3::Client.new(:region => ENV['AWS_REGION_NAME'],
                                 :access_key_id => ENV['AWS_ACCESS_KEY'],
                                 :secret_access_key => ENV['AWS_SECRET_KEY'],
-            )
-    end
+      )
 
-    def get_barcode_info(path)
       File.open("./public/temp.jpg","wb") do |file|
-        file.write @s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path.to_s).body.read
+        file.write @s3.get_object(:bucket => ENV['AWS_STORAGE_NAME'] , :key => path).body.read
       end
 
       # load the image via rmagick
@@ -111,8 +110,27 @@ class FoodsController < ApplicationController
       # load the image from a string
       image = ZBar::Image.from_pgm(input.to_blob)
 
+      barcode = nil
+
       image.process.each do |result|
         puts "Code: #{result.data} - Type: #{result.symbology} - Quality: #{result.quality}"
+        barcode = result.data
       end
+
+      get_barcode_info(barcode.to_s)
+    end
+
+    def get_food_info(barcode)
+      Amazon::Ecs.configure do |options|
+        options[:AWS_access_key_id] = ENV['ECS_ACCESS_KEY']
+        options[:AWS_secret_key] = ENV['ECS_SECRET_KEY']
+        options[:associate_tag] = ENV['ECS_TAG']
+        options[:search_index]      = 'All'                      # 商品種別
+        options[:response_group]    = 'Medium'                     # レスポンスに含まれる情報量(ふつう
+        options[:country]           = 'jp'                         # 国
+      end
+    
+      res = Amazon::Ecs.item_search(barcode.to_s, :search_index => 'All')
+      puts res.get_element('Title').to_s.gsub!(/<Title>|<\/Title>/, "")
     end
 end
